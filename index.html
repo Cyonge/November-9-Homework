@@ -23,16 +23,74 @@
   </head>
 
   <body>
+        <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
     <header class="jumbotron">
       <h1 class="display-3">Work Day Scheduler</h1>
       <p class="lead">A simple calendar app for scheduling your work day</p>
       <p id="currentDay" class="lead"></p>
+      <script src="moment.min.js"></script>
+      <div id="clock">1:35pm</div>
+      <script>
+
+            $(document).ready(function(){
+//Variables Sections:
+            //this sets "m" equal to the moment function (which targets the moment object)
+            const m = moment();
+            //this creates the variable clock and grabs the element 'clock' from the HTML 
+            const clock = document.getElementById('clock');
+            //this is my array for hours in the day
+            var workHours = [8,9,10,11,12,1,2,3,4,5];
+    
+
+//we create this function that contains all of the logic that was originally in the function below
+            function updateTime() {
+    
+              //this creates moment object for the current time
+              const now = moment();
+    
+              //humanReadable changes the format of how the time is displayed
+              //"now" is our defined variable for the new "moment" object that is created
+              const humanReadable = now.format('MMMM Do YYYY, h:mm:ss a')
+    
+              //this is how we display the time on the page (however this will not display right away)
+              clock.textContent = humanReadable;
+            }
+    
+            //we can pass updateTime here so now the interval function will call updateTime every second
+            setInterval(updateTime, 1000);
+    
+            //we can call update time here directly so it will be called when the document loads
+            updateTime();
+
+
+//this section is to dynamically create rows for my calendar
+            //this for loop should loop over the array and give me back calendar rows
+            for (var i=0; i < workHours.length; i++){
+                console.log(i);
+                //then we want to create 10 rows for each hour (this only creates the rows right now and nothing else)
+                var nextRow= $(".container").append(`<div class="row">
+                    <div class="col-md-2 hour"></div>
+                    <div class="col-md-8 textarea"></div>
+                    <div class="col-md-2 saveBtn"></div>
+                    </div>`);
+                console.log(nextRow);
+            }
+
+        });
+    
+        </script>
     </header>
     <div class="container">
       <!-- Timeblocks go here -->
+      <div class="row">
+            <div class="col-md-2"></div>
+            <div class="col-md-8"></div>
+            <div class="col-md-2"></div>
+          </div>
     </div>
 
-    <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+    
     <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.24.0/moment.min.js"></script>
+    
   </body>
 </html>
